@@ -31,7 +31,7 @@ input_list = ["this is a sample",
 key_extract = KeywordExtract()
 
 print(key_extract.infer(input_list))
-
+```
 
 
 ## 路线
