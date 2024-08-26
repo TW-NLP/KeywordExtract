@@ -1,0 +1,7 @@
+torch==2.2.2
+numpy==1.24.4
+networkx==2.8.8
+transformers==4.43.1
+jieba==0.42.1
+
+
