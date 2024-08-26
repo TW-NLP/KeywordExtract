@@ -2,6 +2,8 @@ from collections import Counter
 import math
 import jieba
 
+from utils import stop_load
+
 
 class TFIDF(object):
     """
@@ -19,13 +21,21 @@ class TFIDF(object):
         """
         split_list = []
         counter_list = []
+        stopwords = set(stop_load())
         for data_i in input_data:
-            split_list.append([word_i for word_i in jieba.cut(data_i, cut_all=False)])
-            counter_list.append(Counter(data_i.split()))
+            words = [word_i for word_i in jieba.lcut(data_i) if word_i not in stopwords and len(word_i) > 1]
+            split_list.append(words)
+            counter_list.append(Counter(words))
 
         return split_list, counter_list
 
     def compute_tfidf(self, tf_dict, idf_dict):
+        """
+
+        :param tf_dict:
+        :param idf_dict:
+        :return:
+        """
         tf_idf_dict = {}
         for word, tf_value in tf_dict.items():
             tf_idf_dict[word] = tf_value * idf_dict[word]
