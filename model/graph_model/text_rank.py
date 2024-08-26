@@ -55,7 +55,7 @@ class TextRank(object):
 
 if __name__ == '__main__':
     # 示例文本
-    text = "自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"
+    text = ["自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"]
     text_rank = TextRank()
     # 提取关键词及其权重
     keywords_with_weights = text_rank.infer(text)
