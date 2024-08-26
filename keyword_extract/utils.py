@@ -1,5 +1,4 @@
-from config import STOP_PATH
-
+from keyword_extract.config import STOP_PATH
 
 def stop_load():
     stop_list = [i.strip() for i in open(STOP_PATH, encoding="utf-8").readlines()]

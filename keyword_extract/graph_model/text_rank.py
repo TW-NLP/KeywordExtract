@@ -2,10 +2,11 @@ import jieba
 import networkx as nx
 from itertools import combinations
 
-from utils import stop_load, TextRankConfig
+from keyword_extract.utils import stop_load, TextRankConfig
+from keyword_extract.base.base_keyword_extract import BaseKeyWordExtract
 
 
-class TextRank(object):
+class TextRank(BaseKeyWordExtract):
     def preprocess_text(self, text):
         # 使用 jieba 分词
         words = jieba.lcut(text)
@@ -23,7 +24,7 @@ class TextRank(object):
             if abs(i - j) <= window_size:
                 w1, w2 = words[i], words[j]
                 if graph.has_edge(w1, w2):
-                    graph[w1][w2]['weight'] += 1.0
+                    graph[w1][w2]["weight"] += 1.0
                 else:
                     graph.add_edge(w1, w2, weight=1.0)
 
@@ -44,7 +45,7 @@ class TextRank(object):
             graph = self.build_word_graph(words)
 
             # 使用 PageRank 计算节点权重
-            pagerank = nx.pagerank(graph, weight='weight')
+            pagerank = nx.pagerank(graph, weight="weight")
 
             # 根据权重排序
             sorted_pagerank = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)
@@ -53,9 +54,11 @@ class TextRank(object):
         return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # 示例文本
-    text = ["自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"]
+    text = [
+        "自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"
+    ]
     text_rank = TextRank()
     # 提取关键词及其权重
     keywords_with_weights = text_rank.infer(text)
