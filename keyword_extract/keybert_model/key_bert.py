@@ -1,11 +1,13 @@
 import jieba
 from transformers import BertTokenizer, BertModel
 import numpy as np
+
+from keyword_extract.base.base_keyword_extract import BaseKeyWordExtract
 from keyword_extract.config import DEVICE, KeyBERTConfig
 from keyword_extract.utils import stop_load
 
 
-class KeyBERT(object):
+class KeyBERT(BaseKeyWordExtract):
     def __init__(self):
         # 1. 加载 BERT 模型和 tokenizer
         self.tokenizer = BertTokenizer.from_pretrained(KeyBERTConfig.BERT_MODEL
