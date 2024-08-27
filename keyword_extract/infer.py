@@ -8,14 +8,14 @@ from keyword_extract.statistical_model.tf_idf import TFIDF
 
 
 class KeywordExtract:
-    def __init__(self, type: Literal["TF-IDF", "TextRank"] = "TF-IDF"):
+    def __init__(self, type: Literal["TF-IDF", "TextRank", "KeyBERT"] = "TF-IDF"):
         self.keyword_extract = None
 
         if type == "TF-IDF":
             self.keyword_extract = TFIDF()
         elif type == "TextRank":
             self.keyword_extract = TextRank()
-        elif type == "":
+        elif type == "KeyBERT":
             self.keyword_extract = KeyBERT()
 
     def infer(self, infer_list: list):
