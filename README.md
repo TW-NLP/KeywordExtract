@@ -14,6 +14,7 @@
     - [2.TextRank](#2textrank)
     - [3.KeyBERT](#3KeyBERT)
   - [路线](#路线)
+  - [注意](#注意)
 
 
 
@@ -51,7 +52,7 @@ key_extract = KeywordExtract(type="TextRank")
 print(key_extract.infer(input_list))
 
 ```
-### 2.KeyBERT
+### 3.KeyBERT
 
 
 ```python
@@ -71,4 +72,9 @@ print(key_extract.infer(input_list))
 * [X] 支持TextRank关键词抽取算法
 * [X] 支持KeyBERT关键词抽取算法
 * [ ] 其他
+
+
+## 注意
+可以去https://hf-mirror.com/google-bert/bert-base-chinese 下载对应的权重， 然后放在keyword_extract/data/pre_model/bert_base_chinese中，就可以使用KeyBERT关键词抽取方法。
+
 
