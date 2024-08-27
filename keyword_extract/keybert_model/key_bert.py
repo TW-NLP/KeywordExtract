@@ -74,4 +74,4 @@ class KeyBert(object):
 
 if __name__ == '__main__':
     key_bert = KeyBert()
-    key_bert.infer("")
+    key_bert.infer(['好好学习'])
