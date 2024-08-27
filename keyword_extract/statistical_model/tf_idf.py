@@ -2,10 +2,11 @@ from collections import Counter
 import math
 import jieba
 
-from utils import stop_load
+from keyword_extract.utils import stop_load
+from keyword_extract.base.base_keyword_extract import BaseKeyWordExtract
 
 
-class TFIDF(object):
+class TFIDF(BaseKeyWordExtract):
     """
     TF-IDF算法
     """
@@ -23,7 +24,11 @@ class TFIDF(object):
         counter_list = []
         stopwords = set(stop_load())
         for data_i in input_data:
-            words = [word_i for word_i in jieba.lcut(data_i) if word_i not in stopwords and len(word_i) > 1]
+            words = [
+                word_i
+                for word_i in jieba.lcut(data_i)
+                if word_i not in stopwords and len(word_i) > 1
+            ]
             split_list.append(words)
             counter_list.append(Counter(words))
 
@@ -93,7 +98,7 @@ class TFIDF(object):
         return result_list
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
     # # 示例文档
     #
