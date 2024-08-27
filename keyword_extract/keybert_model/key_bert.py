@@ -5,7 +5,7 @@ from keyword_extract.config import DEVICE, KeyBERTConfig
 from keyword_extract.utils import stop_load
 
 
-class KeyBert(object):
+class KeyBERT(object):
     def __init__(self):
         # 1. 加载 BERT 模型和 tokenizer
         self.tokenizer = BertTokenizer.from_pretrained(KeyBERTConfig.BERT_MODEL
@@ -73,5 +73,5 @@ class KeyBert(object):
 
 
 if __name__ == '__main__':
-    key_bert = KeyBert()
+    key_bert = KeyBERT()
     key_bert.infer(['好好学习'])
