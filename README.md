@@ -76,7 +76,7 @@ from keyword_extract import KeywordExtract
     
 input_list = ["自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"]
 key_extract = KeywordExtract(type="Word2Vec")
-# 基于KeyBERT进行关键词的抽取
+# 基于Word2Vec进行关键词的抽取
 print(key_extract.infer(input_list))
 
 ```
