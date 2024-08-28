@@ -67,7 +67,7 @@ print(key_extract.infer(input_list))
 
 ```
 
-### 3.Word2Vec
+### 4.Word2Vec
 
 
 ```python
