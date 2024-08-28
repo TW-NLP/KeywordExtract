@@ -24,13 +24,15 @@ class TFIDF(BaseKeyWordExtract):
         counter_list = []
         stopwords = set(stop_load())
         for data_i in input_data:
-            words = [
-                word_i
-                for word_i in jieba.lcut(data_i)
-                if word_i not in stopwords and len(word_i) > 1
-            ]
-            split_list.append(words)
-            counter_list.append(Counter(words))
+            words = jieba.lcut(data_i)
+
+            candidate_keywords = [word for word in words if word not in stopwords and len(word) > 1]
+            if candidate_keywords == []:
+                # 采用2-gram 进行词的分割
+                for i in range(len(words) - 1):
+                    candidate_keywords.append(''.join(words[i:i + 2]))
+            split_list.append(candidate_keywords)
+            counter_list.append(Counter(candidate_keywords))
 
         return split_list, counter_list
 
@@ -99,12 +101,9 @@ class TFIDF(BaseKeyWordExtract):
 
 
 if __name__ == "__main__":
-    pass
     # # 示例文档
     #
-    # input_list = ["this is a sample",
-    #               "this is another example example example",
-    #               "this is a different example example"]
+    input_list = ["有暖女吗？"]
     #
-    # tfidf = TFIDF()
-    # print(tfidf.infer(input_list))
+    tfidf = TFIDF()
+    print(tfidf.infer(input_list))

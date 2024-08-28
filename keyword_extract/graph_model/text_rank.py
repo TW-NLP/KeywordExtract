@@ -12,8 +12,12 @@ class TextRank(BaseKeyWordExtract):
         words = jieba.lcut(text)
         # 去除停用词和无意义的标点符号
         stopwords = set(stop_load())
-        words = [word for word in words if word not in stopwords and len(word) > 1]
-        return words
+        candidate_keywords = [word for word in words if word not in stopwords and len(word) > 1]
+        if candidate_keywords == []:
+            # 采用2-gram 进行词的分割
+            for i in range(len(words) - 1):
+                candidate_keywords.append(''.join(words[i:i + 2]))
+        return candidate_keywords
 
     def build_word_graph(self, words, window_size=TextRankConfig.WINDOW_SIZE):
         # 构建词语共现图
@@ -57,7 +61,7 @@ class TextRank(BaseKeyWordExtract):
 if __name__ == "__main__":
     # 示例文本
     text = [
-        "自然语言处理是人工智能领域中的一个重要方向。它研究人与计算机之间如何使用自然语言进行有效沟通。"
+        "有暖女吗？"
     ]
     text_rank = TextRank()
     # 提取关键词及其权重
