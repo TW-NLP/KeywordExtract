@@ -59,7 +59,10 @@ class KeyBERT(BaseKeyWordExtract):
             # 去除停用词和无意义的标点符号
             stopwords = set(stop_load())
             candidate_keywords = [word for word in words if word not in stopwords and len(word) > 1]
-
+            if candidate_keywords == []:
+                # 采用2-gram 进行词的分割
+                for i in range(len(words) - 1):
+                    candidate_keywords.append(''.join(words[i:i + 2]))
             # 生成嵌入向量
             text_embedding = self.get_embeddings(text_i)
             keyword_embeddings = np.array([self.get_embeddings(keyword) for keyword in candidate_keywords])
@@ -76,4 +79,4 @@ class KeyBERT(BaseKeyWordExtract):
 
 if __name__ == '__main__':
     key_bert = KeyBERT()
-    key_bert.infer(['好好学习'])
+    print(key_bert.infer(['有暖女吗？']))
