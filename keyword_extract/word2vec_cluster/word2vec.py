@@ -80,17 +80,20 @@ class Word2VecCluster(BaseKeyWordExtract):
         return keywords
 
     def infer(self, input_text):
-        # 文本预处理
-        processed_sentences = self.preprocess_text(input_text)
-        model = self.train_model(processed_sentences)
-        word_list, word_vectors = self.get_embedding(model, processed_sentences[0])
-        keywords = self.extract_keywords_by_dbscan(word_vectors, word_list)
-        return keywords
+        result = []
+        for test_i in input_text:
+            # 文本预处理
+            processed_sentences = self.preprocess_text(test_i)
+            model = self.train_model(processed_sentences)
+            word_list, word_vectors = self.get_embedding(model, processed_sentences[0])
+            keywords = self.extract_keywords_by_dbscan(word_vectors, word_list)
+            result.append(keywords)
+        return result
 
 
 # 示例文本
 if __name__ == '__main__':
-    text = "人工智能是计算机科学的一个分支，它试图理解智能的本质，并生产出一种新的能以人类智能相似方式做出反应的智能机器。"
+    text = ["人工智能是计算机科学的一个分支，它试图理解智能的本质，并生产出一种新的能以人类智能相似方式做出反应的智能机器。"]
 
     w2v_model = Word2VecCluster()
     print(w2v_model.infer(text))
