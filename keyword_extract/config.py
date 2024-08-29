@@ -24,3 +24,7 @@ class Word2vecConfig(object):
     DB_EPS = 0.01
     DB_MIN_SAMPLES = 2
     DB_METRIC = 'cosine'
+
+
+class LDAConfig(object):
+    TOP_NUM = 2
