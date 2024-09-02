@@ -78,6 +78,7 @@ class TFIDF(BaseKeyWordExtract):
             for doc_j in doc_list:
                 if word_j in doc_j:
                     idf_dict[word_j] += 1
+        # 这里容易出现负值 要优化一下
         return {k: math.log(len(doc_list) / (v + 1)) for k, v in idf_dict.items()}
 
     def infer(self, input_list):
@@ -89,14 +90,27 @@ class TFIDF(BaseKeyWordExtract):
         doc_words, word_dict = self.data_split(input_list)
 
         tf_list = []
-        for word_i, doc_j in zip(word_dict, doc_words):
-            tf_list.append(self.compute_tf(word_i, doc_j))
+        # 统计总的出现次数
+        sum_dict = {}
+
+        for count_i in word_dict:
+            for k, v in count_i.items():
+                if k not in sum_dict:
+                    sum_dict[k] = v
+                else:
+                    sum_dict[k] += v
+        # 统计去重后的list
+        sum_list = []
+        for doc_i in doc_words:
+            sum_list.extend(doc_i)
+        sum_list = list(set(sum_list))
+        tf_list.append(self.compute_tf(sum_dict, sum_list))
+        # 进行合并的计算 TF的合并
+
         # 计算整个文档集合的IDF
         idf = self.compute_idf(doc_words)
 
-        result_list = []
-        for tf_i in tf_list:
-            result_list.append(self.compute_tfidf(tf_i, idf))
+        result_list = [self.compute_tfidf(tf_list[0], idf)]
         return result_list
 
 
